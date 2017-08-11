@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<!--
+	Overflow by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Regular Expressions. Verbally.</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+
+		<link rel="icon" type="image/png" href="images/favicon.png">
+
+		<script src="https://cdn.jsdelivr.net/jsverbalexpressions/0.3.0/verbalexpressions.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+	</head>
+	<body>
+			<section id="header">
+				<header>
+					<h1>Regular Expressions</h1>
+					<p>Verbally</p>
+				</header>
+				<footer>
+					<a href="#banner" class="button style2 scrolly-middle">Read more</a>
+				</footer>
+			</section>
+
+			<section id="banner">
+				<header>
+					<h2>JSVerbalExpressions</h2>
+				</header>
+				<p>
+					Tired of pulling complex regex constructions out of your mind? Me too.<br />
+					Luckily there's a beautiful <a href="https://github.com/VerbalExpressions/JSVerbalExpressions" target="_blank">library</a> for building 'em verbally.<br />
+					<a href="https://github.com/VerbalExpressions/JSVerbalExpressions/wiki" target="_blank">That</a> is the short how-to.
+					And <strong>this</strong> is an online version. You are wellcome.<br />
+				</p>
+				<footer>
+					<a href="#first" class="button style2 scrolly">Start building</a>
+				</footer>
+			</section>
+		
+			<article id="first" class="container box style3">
+				<section>
+				<header>
+					<h3>Now Express yourself!</h3>
+				</header>
+				<form method="post" action="#">
+					<div class="row 50%">
+						<div class="12u$">
+							<textarea name="message" id="expression" placeholder="startOfLine()
+    .then('http').maybe('s').then('://').maybe('www.').anythingBut(' ')
+.endOfLine();"></textarea>
+						</div>
+						<div class="12u$">
+							<ul class="actions">
+								<li><input type="submit" value="Convert" onclick="return convert(document.getElementById('expression').value);" /></li>
+								<li><input type="reset" class="style3" value="Clear" /></li>
+							</ul>
+						</div>
+					</div>
+				</form>
+				</section>
+			</article>
+		
+			<article class="container box style3">
+					<form method="post" action="#">
+						<div class="row">
+							<div class="12u">
+								<textarea name="message" id="regex" placeholder="/^(?:http)(?:s)?(?:\:\/\/)(?:www\.)?(?:[^ ]*)$/gm"></textarea>
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<ul class="actions">
+									<li><input id="copy" type="submit" value="Copy to clipboard" data-clipboard-target="#regex" onclick="return false;" /></li>
+								</ul>
+							</div>
+						</div>
+					</form>
+			</article>
+
+		<section id="footer">
+			<ul class="icons">
+				<li><a href="https://github.com/dtitov" class="icon fa-github"><span class="label">GitHub</span></a></li>
+				<li><a href="https://linkedin.com/in/dtitov" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+				<li><a href="#" class="icon fa-envelope"><span class="label">Mail</span></a></li>
+			</ul>
+			<div class="copyright">
+				<ul class="menu">
+					<li>&copy; Dmytro Titov. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+			<script type="text/javascript">
+				new Clipboard('#copy');
+				function convert(expression) {
+					try {
+    					document.getElementById('regex').value = eval("VerEx()." + expression);
+					} catch(err) {
+    					console.log(err);
+    				} finally {
+    					return false;
+					}
+				}
+			</script>
+	</body>
+</html>
