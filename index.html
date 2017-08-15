@@ -51,14 +51,14 @@
 				</header>
 				<form method="post" action="#">
 					<div class="row 50%">
-						<div class="12u$">
-							<textarea name="message" id="expression" placeholder="startOfLine()
+						<div class="12u">
+							<textarea id="expression" placeholder="startOfLine()
     .then('http').maybe('s').then('://').maybe('www.').anythingBut(' ')
 .endOfLine();"></textarea>
 						</div>
-						<div class="12u$">
+						<div class="12u">
 							<ul class="actions">
-								<li><input type="submit" value="Convert" onclick="return convert(document.getElementById('expression').value);" /></li>
+								<li><input type="submit" value="Convert" onclick="return convert($('#expression')[0].value);" /></li>
 								<li><input type="reset" class="style3" value="Clear" /></li>
 							</ul>
 						</div>
@@ -75,14 +75,37 @@
 					<form method="post" action="#">
 						<div class="row">
 							<div class="12u">
-								<textarea name="message" id="regex" placeholder="/^(?:http)(?:s)?(?:\:\/\/)(?:www\.)?(?:[^ ]*)$/gm"></textarea>
+								<textarea id="regex" placeholder="/^(?:http)(?:s)?(?:\:\/\/)(?:www\.)?(?:[^ ]*)$/gm"></textarea>
 							</div>
 						</div>
 						<div class="row">
 							<div class="12u">
 								<ul class="actions">
-									<li><input id="copy" type="submit" value="Copy to clipboard" data-clipboard-target="#regex" onclick="return false;" /></li>
+									<li><input id="copy" type="submit" value="Copy" data-clipboard-target="#regex" onclick="return false;" /></li>
+									<li><input type="reset" class="style3" value="Clear" /></li>
 								</ul>
+							</div>
+						</div>
+					</form>
+				</section>
+			</article>
+
+			<article class="container box style3">
+				<section>
+					<header>
+						<h3>And check how it works ;)</h3>
+					</header>
+					<form method="post" action="#">
+						<div class="row">
+							<div class="12u">
+								<p id="test" contenteditable="true" style="background: #f1f1f1;" placeholder="Drop here some text to test..."></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<ul class="actions">
+									<li><input type="submit" value="Test" onclick="return apply($('#regex')[0].value);" /></li>
+									<li><input type="reset" class="style3" value="Clear" onclick="clean($('#test')[0]);"/></li>
 							</div>
 						</div>
 					</form>
@@ -115,7 +138,30 @@
 				new Clipboard('#copy');
 				function convert(expression) {
 					try {
-    					document.getElementById('regex').value = eval("VerEx()." + expression);
+    					$('#regex')[0].value = eval("VerEx()." + expression);
+					} catch(err) {
+    					console.log(err);
+    				} finally {
+    					return false;
+					}
+				}
+				function apply(regex) {
+					try {
+    					var test = $("#test");
+    					if (test[0].textContent && regex) {
+    						var match = regex.match(new RegExp('^/(.*?)/([gimy]*)$'));
+							var re = new RegExp(match[1], match[2]);
+    						test.html(test[0].innerText.replace(re, '<span class="highlight">$&</span>').replace(/\n/g, '<br>'));
+    					}
+					} catch(err) {
+    					console.log(err);
+    				} finally {
+    					return false;
+					}
+				}
+				function clean(element) {
+					try {
+    					element.textContent = "";
 					} catch(err) {
     					console.log(err);
     				} finally {
@@ -133,5 +179,14 @@
   				ga('create', 'UA-104467547-1', 'auto');
   				ga('send', 'pageview');
 			</script>
+			<style type="text/css">
+				[contenteditable=true]:empty:before {
+  					content: attr(placeholder);
+  					display: block; /* For Firefox */
+				}
+				.highlight {
+    				background-color:yellow;
+				}
+			</style>
 	</body>
 </html>
